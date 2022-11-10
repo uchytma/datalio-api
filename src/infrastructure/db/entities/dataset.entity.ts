@@ -1,9 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
-export class DataSet {
+@Entity('dataset')
+export class DatasetEntity {
   @PrimaryGeneratedColumn('uuid')
-  guid: string;
+  id: string;
 
   @Column({ unique: true })
   code: string;

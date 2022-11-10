@@ -7,7 +7,7 @@ export class IndexController {
   constructor(private readonly helloWorldUseCase: HelloWorldUseCase) {}
 
   @Get()
-  get(): IndexResponseDto {
+  async get(): Promise<IndexResponseDto> {
     return new IndexResponseDto({
       message: this.helloWorldUseCase.GetMessage(),
     });
