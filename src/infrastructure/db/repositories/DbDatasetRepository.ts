@@ -13,12 +13,9 @@ export class DbDatasetRepository implements DatasetRepositoryReadonly {
   ) {}
 
   async getById(id: string): Promise<Dataset | null> {
-    const dataset = await this.repo.findOneBy({ id: id });
-    if (dataset == null) return null;
-    return { ...dataset };
+    return await this.repo.findOneBy({ id: id });
   }
   async get(): Promise<Dataset[]> {
-    const list = await this.repo.find();
-    return list.map((dataset) => ({ ...dataset }));
+    return await this.repo.find();
   }
 }
