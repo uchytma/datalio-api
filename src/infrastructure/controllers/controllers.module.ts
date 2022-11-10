@@ -1,13 +1,11 @@
 import { DynamicModule, Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { IndexController } from './index/index.controller';
 import { HelloWorldUseCase } from '../../domain/usecases/index/hello-world.usecase';
 import { DatasetsController } from './datasets/datasets.controller';
 import { DatasetRepositoryReadonly } from '../../domain/datasets/interfaces/datasetRepositoryReadonly.interface';
-import { DbDatasetRepository } from '../db/repositories/DbDatasetRepository';
-import { DatasetEntity } from '../db/entities/dataset.entity';
 import { GetDatasetsUsecase } from '../../domain/datasets/usecases/get.usecase';
 import { GetDatasetByIdUsecase } from '../../domain/datasets/usecases/getById.usecase';
+import { DbModule } from '../db/db.module';
 
 const helloWorldUseCase = {
   provide: HelloWorldUseCase,
@@ -22,21 +20,20 @@ export class ControllersModule {
   static register(): DynamicModule {
     return {
       module: ControllersModule,
-      imports: [TypeOrmModule.forFeature([DatasetEntity])],
+      imports: [DbModule],
       providers: [
         helloWorldUseCase,
-        { provide: 'DatasetRepositoryReadonly', useClass: DbDatasetRepository },
         {
-          provide: 'GetDatasetsUsecase',
+          provide: GetDatasetsUsecase,
           useFactory: (repo: DatasetRepositoryReadonly) =>
             new GetDatasetsUsecase(repo),
-          inject: ['DatasetRepositoryReadonly'],
+          inject: [DbModule.DATASET_REPOSITORY_READONLY],
         },
         {
-          provide: 'GetDatasetByIdUsecase',
+          provide: GetDatasetByIdUsecase,
           useFactory: (repo: DatasetRepositoryReadonly) =>
             new GetDatasetByIdUsecase(repo),
-          inject: ['DatasetRepositoryReadonly'],
+          inject: [DbModule.DATASET_REPOSITORY_READONLY],
         },
       ],
       exports: [],

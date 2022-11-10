@@ -6,9 +6,7 @@ import { GetDatasetByIdUsecase } from 'src/domain/datasets/usecases/getById.usec
 @Controller('datasets')
 export class DatasetsController {
   constructor(
-    @Inject('GetDatasetsUsecase')
     private readonly getDatasetsUsecase: GetDatasetsUsecase,
-    @Inject('GetDatasetByIdUsecase')
     private readonly getDatasetByIdUsecase: GetDatasetByIdUsecase,
   ) {}
 
