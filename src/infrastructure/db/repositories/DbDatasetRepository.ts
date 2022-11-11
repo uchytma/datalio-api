@@ -4,6 +4,8 @@ import { Dataset } from 'src/domain/datasets/types/dataset.types';
 import { DatasetEntity } from '../entities/dataset.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
+import { DatasetCodeAlreadyExistsException } from 'src/domain/datasets/exceptions/datasetCodeAlreadyExists.exception';
+import { TypeOrmPostgressErrorParser } from 'src/utils/typeOrm/typeOrmPostgressErrorParser';
 
 @Injectable()
 export class DbDatasetRepository implements DatasetRepository {
@@ -12,9 +14,18 @@ export class DbDatasetRepository implements DatasetRepository {
     private readonly repo: Repository<DatasetEntity>,
   ) {}
 
-  create(name: string, code: string): Promise<Dataset> {
+  /**
+   * @throws DatasetCodeAlreadyExistsException
+   */
+  async create(name: string, code: string): Promise<Dataset> {
     const dbEntity = this.repo.create({ name: name, code: code });
-    return this.repo.save(dbEntity);
+    try {
+      return await this.repo.save(dbEntity);
+    } catch (e) {
+      if (TypeOrmPostgressErrorParser.isDuplicateFieldError(e, 'code'))
+        throw new DatasetCodeAlreadyExistsException();
+      throw e;
+    }
   }
 
   getById(id: string): Promise<Dataset | null> {
