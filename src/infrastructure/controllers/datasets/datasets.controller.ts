@@ -1,4 +1,4 @@
-import { Controller, Get, HttpException, Inject, Param } from '@nestjs/common';
+import { Controller, Get, HttpException, Param } from '@nestjs/common';
 import { Dataset } from 'src/domain/datasets/types/dataset.types';
 import { GetDatasetsUsecase } from 'src/domain/datasets/usecases/get.usecase';
 import { GetDatasetByIdUsecase } from 'src/domain/datasets/usecases/getById.usecase';
