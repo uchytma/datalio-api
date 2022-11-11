@@ -1,11 +1,15 @@
 import { Repository } from 'typeorm';
 import { DatasetRepository } from 'src/domain/datasets/interfaces/datasetRepositoryReadonly.interface';
-import { Dataset } from 'src/domain/datasets/types/dataset.types';
+import {
+  Dataset,
+  UpdateDataset,
+} from 'src/domain/datasets/types/dataset.types';
 import { DatasetEntity } from '../entities/dataset.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { DatasetCodeAlreadyExistsException } from 'src/domain/datasets/exceptions/datasetCodeAlreadyExists.exception';
 import { TypeOrmPostgressErrorParser } from 'src/utils/typeOrm/typeOrmPostgressErrorParser';
+import { DatasetNotFoundException } from 'src/domain/datasets/exceptions/datasetNotFoundException';
 
 @Injectable()
 export class DbDatasetRepository implements DatasetRepository {
@@ -13,6 +17,22 @@ export class DbDatasetRepository implements DatasetRepository {
     @InjectRepository(DatasetEntity)
     private readonly repo: Repository<DatasetEntity>,
   ) {}
+
+  /**
+   * @throws DatasetCodeAlreadyExistsException
+   * @throws DatasetNotFoundException
+   */
+  async update(dataset: UpdateDataset): Promise<Dataset> {
+    const datasetEntity = await this.getById(dataset.id);
+    if (datasetEntity == null) throw new DatasetNotFoundException();
+    try {
+      return await this.repo.save({ ...datasetEntity, ...dataset });
+    } catch (e) {
+      if (TypeOrmPostgressErrorParser.isDuplicateFieldError(e, 'code'))
+        throw new DatasetCodeAlreadyExistsException();
+      throw e;
+    }
+  }
 
   /**
    * @throws DatasetCodeAlreadyExistsException

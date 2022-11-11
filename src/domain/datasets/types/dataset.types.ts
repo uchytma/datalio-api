@@ -3,3 +3,5 @@ export type Dataset = {
   name: string;
   code: string;
 };
+
+export type UpdateDataset = Partial<Dataset> & Pick<Dataset, 'id'>;

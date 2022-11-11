@@ -17,3 +17,14 @@ export class CreateDataset {
   @Field(() => String, { nullable: false })
   code: string;
 }
+
+@ArgsType()
+export class UpdateDataset {
+  @Field(() => String, { nullable: false })
+  id: string;
+
+  @Field(() => String, { nullable: true })
+  name: string;
+  @Field(() => String, { nullable: true })
+  code: string;
+}
