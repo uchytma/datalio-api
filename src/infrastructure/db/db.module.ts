@@ -11,12 +11,12 @@ const dbModule = TypeOrmModule.forRoot(getDataSourceOptions());
   controllers: [],
   providers: [
     {
-      provide: DbModule.DATASET_REPOSITORY_READONLY,
+      provide: DbModule.DATASET_REPOSITORY,
       useClass: DbDatasetRepository,
     },
   ],
-  exports: [DbModule.DATASET_REPOSITORY_READONLY],
+  exports: [DbModule.DATASET_REPOSITORY],
 })
 export class DbModule {
-  static readonly DATASET_REPOSITORY_READONLY = 'DatasetRepositoryReadonly';
+  static readonly DATASET_REPOSITORY = 'DatasetRepositoryReadonly';
 }

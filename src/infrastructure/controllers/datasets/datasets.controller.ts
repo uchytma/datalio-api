@@ -12,12 +12,12 @@ export class DatasetsController {
 
   @Get()
   async get(): Promise<Dataset[]> {
-    return await this.getDatasetsUsecase.get();
+    return await this.getDatasetsUsecase.call();
   }
 
   @Get(':id')
   async getById(@Param('id') id: string): Promise<Dataset> {
-    const set = await this.getDatasetByIdUsecase.get(id);
+    const set = await this.getDatasetByIdUsecase.call(id);
     if (set == null) throw new HttpException('Dataset not found', 404);
     return set;
   }

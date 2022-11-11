@@ -1,21 +1,27 @@
 import { Repository } from 'typeorm';
-import { DatasetRepositoryReadonly } from 'src/domain/datasets/interfaces/datasetRepositoryReadonly.interface';
+import { DatasetRepository } from 'src/domain/datasets/interfaces/datasetRepositoryReadonly.interface';
 import { Dataset } from 'src/domain/datasets/types/dataset.types';
 import { DatasetEntity } from '../entities/dataset.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class DbDatasetRepository implements DatasetRepositoryReadonly {
+export class DbDatasetRepository implements DatasetRepository {
   constructor(
     @InjectRepository(DatasetEntity)
     private readonly repo: Repository<DatasetEntity>,
   ) {}
 
-  async getById(id: string): Promise<Dataset | null> {
-    return await this.repo.findOneBy({ id: id });
+  create(name: string, code: string): Promise<Dataset> {
+    const dbEntity = this.repo.create({ name: name, code: code });
+    return this.repo.save(dbEntity);
   }
-  async get(): Promise<Dataset[]> {
-    return await this.repo.find();
+
+  getById(id: string): Promise<Dataset | null> {
+    return this.repo.findOneBy({ id: id });
+  }
+
+  get(): Promise<Dataset[]> {
+    return this.repo.find();
   }
 }

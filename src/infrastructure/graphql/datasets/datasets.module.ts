@@ -1,5 +1,6 @@
 import { DynamicModule, Module } from '@nestjs/common';
-import { DatasetRepositoryReadonly } from 'src/domain/datasets/interfaces/datasetRepositoryReadonly.interface';
+import { DatasetRepository } from 'src/domain/datasets/interfaces/datasetRepositoryReadonly.interface';
+import { CreateDatasetUsecase } from 'src/domain/datasets/usecases/create.usecase';
 import { GetDatasetsUsecase } from 'src/domain/datasets/usecases/get.usecase';
 import { GetDatasetByIdUsecase } from 'src/domain/datasets/usecases/getById.usecase';
 import { DbModule } from 'src/infrastructure/db/db.module';
@@ -15,15 +16,20 @@ export class DatasetsModule {
         DatasetResolver,
         {
           provide: GetDatasetsUsecase,
-          useFactory: (repo: DatasetRepositoryReadonly) =>
-            new GetDatasetsUsecase(repo),
-          inject: [DbModule.DATASET_REPOSITORY_READONLY],
+          useFactory: (repo: DatasetRepository) => new GetDatasetsUsecase(repo),
+          inject: [DbModule.DATASET_REPOSITORY],
         },
         {
           provide: GetDatasetByIdUsecase,
-          useFactory: (repo: DatasetRepositoryReadonly) =>
+          useFactory: (repo: DatasetRepository) =>
             new GetDatasetByIdUsecase(repo),
-          inject: [DbModule.DATASET_REPOSITORY_READONLY],
+          inject: [DbModule.DATASET_REPOSITORY],
+        },
+        {
+          provide: CreateDatasetUsecase,
+          useFactory: (repo: DatasetRepository) =>
+            new CreateDatasetUsecase(repo),
+          inject: [DbModule.DATASET_REPOSITORY],
         },
       ],
       exports: [],
