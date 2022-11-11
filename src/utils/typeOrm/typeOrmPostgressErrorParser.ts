@@ -9,9 +9,7 @@ export class TypeOrmPostgressErrorParser {
   static isDuplicateFieldError(error: any, field: string): boolean {
     if (error instanceof QueryFailedError) {
       const { code, detail } = error as any;
-      const regex = new RegExp(
-        `Key \\(${field}\\)=\\((\\w+)\\) already exists.`,
-      );
+      const regex = new RegExp(`Key \\(${field}\\)=\\((\\w+)\\) already exists.`);
       if (code === PG_UNIQUE_VIOLATION && regex.test(detail)) return true;
     }
     return false;

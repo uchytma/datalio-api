@@ -21,23 +21,17 @@ export class DatasetResolver {
   }
 
   @Query(() => Dataset, { name: 'dataset', nullable: true })
-  async findDatasetById(
-    @Args('id', { type: () => UUIDResolver }) id: string,
-  ): Promise<Dataset | null> {
+  async findDatasetById(@Args('id', { type: () => UUIDResolver }) id: string): Promise<Dataset | null> {
     return await this.getDatasetByIdUsecase.call(id);
   }
 
   @Mutation(() => Dataset)
-  async createDataset(
-    @Args({ type: () => CreateDataset }) args: CreateDataset,
-  ): Promise<Dataset> {
+  async createDataset(@Args({ type: () => CreateDataset }) args: CreateDataset): Promise<Dataset> {
     return await this.createDatasetUsecase.call(args.name, args.code);
   }
 
   @Mutation(() => Dataset)
-  async updateDataset(
-    @Args({ type: () => UpdateDataset }) args: UpdateDataset,
-  ): Promise<Dataset> {
+  async updateDataset(@Args({ type: () => UpdateDataset }) args: UpdateDataset): Promise<Dataset> {
     return await this.updateDatasetUsecase.call(args);
   }
 }

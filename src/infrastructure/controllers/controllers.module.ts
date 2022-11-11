@@ -19,8 +19,7 @@ export class ControllersModule {
         },
         {
           provide: GetDatasetByIdUsecase,
-          useFactory: (repo: DatasetRepository) =>
-            new GetDatasetByIdUsecase(repo),
+          useFactory: (repo: DatasetRepository) => new GetDatasetByIdUsecase(repo),
           inject: [DbModule.DATASET_REPOSITORY],
         },
       ],

@@ -1,9 +1,6 @@
 import { Repository } from 'typeorm';
 import { DatasetRepository } from 'src/domain/datasets/interfaces/datasetRepositoryReadonly.interface';
-import {
-  Dataset,
-  UpdateDataset,
-} from 'src/domain/datasets/types/dataset.types';
+import { Dataset, UpdateDataset } from 'src/domain/datasets/types/dataset.types';
 import { DatasetEntity } from '../entities/dataset.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
@@ -28,8 +25,7 @@ export class DbDatasetRepository implements DatasetRepository {
     try {
       return await this.repo.save({ ...datasetEntity, ...dataset });
     } catch (e) {
-      if (TypeOrmPostgressErrorParser.isDuplicateFieldError(e, 'code'))
-        throw new DatasetCodeAlreadyExistsException();
+      if (TypeOrmPostgressErrorParser.isDuplicateFieldError(e, 'code')) throw new DatasetCodeAlreadyExistsException();
       throw e;
     }
   }
@@ -42,8 +38,7 @@ export class DbDatasetRepository implements DatasetRepository {
     try {
       return await this.repo.save(dbEntity);
     } catch (e) {
-      if (TypeOrmPostgressErrorParser.isDuplicateFieldError(e, 'code'))
-        throw new DatasetCodeAlreadyExistsException();
+      if (TypeOrmPostgressErrorParser.isDuplicateFieldError(e, 'code')) throw new DatasetCodeAlreadyExistsException();
       throw e;
     }
   }

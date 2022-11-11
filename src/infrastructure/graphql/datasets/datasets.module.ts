@@ -22,20 +22,17 @@ export class DatasetsModule {
         },
         {
           provide: GetDatasetByIdUsecase,
-          useFactory: (repo: DatasetRepository) =>
-            new GetDatasetByIdUsecase(repo),
+          useFactory: (repo: DatasetRepository) => new GetDatasetByIdUsecase(repo),
           inject: [DbModule.DATASET_REPOSITORY],
         },
         {
           provide: CreateDatasetUsecase,
-          useFactory: (repo: DatasetRepository) =>
-            new CreateDatasetUsecase(repo),
+          useFactory: (repo: DatasetRepository) => new CreateDatasetUsecase(repo),
           inject: [DbModule.DATASET_REPOSITORY],
         },
         {
           provide: UpdateDatasetUsecase,
-          useFactory: (repo: DatasetRepository) =>
-            new UpdateDatasetUsecase(repo),
+          useFactory: (repo: DatasetRepository) => new UpdateDatasetUsecase(repo),
           inject: [DbModule.DATASET_REPOSITORY],
         },
       ],
