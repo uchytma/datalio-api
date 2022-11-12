@@ -1,12 +1,12 @@
 import { Repository } from 'typeorm';
-import { DatasetRepository } from 'src/domain/datasets/interfaces/datasetRepository.interface';
-import { Dataset, UpdateDataset } from 'src/domain/datasets/types/dataset.types';
+import { DatasetRepository } from 'src/domain/interfaces/datasetRepository.interface';
+import { Dataset, UpdateDataset } from 'src/domain/types/dataset.types';
 import { DatasetEntity } from '../entities/dataset.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
-import { DatasetCodeAlreadyExistsException } from 'src/domain/datasets/exceptions/datasetCodeAlreadyExists.exception';
+import { DatasetCodeAlreadyExistsException } from 'src/domain/exceptions/datasetCodeAlreadyExists.exception';
 import { TypeOrmPostgressErrorParser } from 'src/utils/typeOrm/typeOrmPostgressErrorParser';
-import { DatasetNotFoundException } from 'src/domain/datasets/exceptions/datasetNotFoundException';
+import { DatasetNotFoundException } from 'src/domain/exceptions/datasetNotFoundException';
 
 @Injectable()
 export class DbDatasetRepository implements DatasetRepository {

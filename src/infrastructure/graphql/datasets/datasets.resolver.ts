@@ -1,6 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { GetDatasetsUsecase } from 'src/domain/datasets/usecases/get.usecase';
-import { GetDatasetByIdUsecase } from 'src/domain/datasets/usecases/getById.usecase';
+import { GetDatasetsUsecase } from 'src/domain/usecases/getDataset.usecase';
+import { GetDatasetByIdUsecase } from 'src/domain/usecases/getDatasetById.usecase';
 import {
   CreateDatasetInput,
   CreateDatasetPayload,
@@ -9,8 +9,8 @@ import {
   UpdateDatasetPayload,
 } from './datasets.schema';
 import { UUIDResolver } from 'graphql-scalars';
-import { CreateDatasetUsecase } from 'src/domain/datasets/usecases/create.usecase';
-import { UpdateDatasetUsecase } from 'src/domain/datasets/usecases/update.usecase';
+import { CreateDatasetUsecase } from 'src/domain/usecases/createDataset.usecase';
+import { UpdateDatasetUsecase } from 'src/domain/usecases/updateDataset.usecase';
 
 @Resolver(() => Dataset)
 export class DatasetResolver {

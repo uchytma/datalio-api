@@ -1,9 +1,9 @@
 import { DynamicModule, Module } from '@nestjs/common';
-import { DatasetRepository } from 'src/domain/datasets/interfaces/datasetRepository.interface';
-import { CreateDatasetUsecase } from 'src/domain/datasets/usecases/create.usecase';
-import { GetDatasetsUsecase } from 'src/domain/datasets/usecases/get.usecase';
-import { GetDatasetByIdUsecase } from 'src/domain/datasets/usecases/getById.usecase';
-import { UpdateDatasetUsecase } from 'src/domain/datasets/usecases/update.usecase';
+import { DatasetRepository } from 'src/domain/interfaces/datasetRepository.interface';
+import { CreateDatasetUsecase } from 'src/domain/usecases/createDataset.usecase';
+import { GetDatasetsUsecase } from 'src/domain/usecases/getDataset.usecase';
+import { GetDatasetByIdUsecase } from 'src/domain/usecases/getDatasetById.usecase';
+import { UpdateDatasetUsecase } from 'src/domain/usecases/updateDataset.usecase';
 import { DbModule } from 'src/infrastructure/db/db.module';
 import { DatasetResolver } from './datasets.resolver';
 
