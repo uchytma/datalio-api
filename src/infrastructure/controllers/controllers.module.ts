@@ -1,6 +1,6 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { DatasetsController } from './datasets/datasets.controller';
-import { DatasetRepository } from '../../domain/datasets/interfaces/datasetRepositoryReadonly.interface';
+import { DatasetRepository } from '../../domain/datasets/interfaces/datasetRepository.interface';
 import { GetDatasetsUsecase } from '../../domain/datasets/usecases/get.usecase';
 import { GetDatasetByIdUsecase } from '../../domain/datasets/usecases/getById.usecase';
 import { DbModule } from '../db/db.module';

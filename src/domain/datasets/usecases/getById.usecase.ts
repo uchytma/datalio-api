@@ -1,4 +1,4 @@
-import { DatasetRepository } from '../interfaces/datasetRepositoryReadonly.interface';
+import { DatasetRepository } from '../interfaces/datasetRepository.interface';
 import { Dataset } from '../types/dataset.types';
 
 export class GetDatasetByIdUsecase {

@@ -1,5 +1,5 @@
 import { DynamicModule, Module } from '@nestjs/common';
-import { DatasetRepository } from 'src/domain/datasets/interfaces/datasetRepositoryReadonly.interface';
+import { DatasetRepository } from 'src/domain/datasets/interfaces/datasetRepository.interface';
 import { CreateDatasetUsecase } from 'src/domain/datasets/usecases/create.usecase';
 import { GetDatasetsUsecase } from 'src/domain/datasets/usecases/get.usecase';
 import { GetDatasetByIdUsecase } from 'src/domain/datasets/usecases/getById.usecase';
