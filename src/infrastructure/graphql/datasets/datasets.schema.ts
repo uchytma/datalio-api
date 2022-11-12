@@ -11,15 +11,21 @@ export class Dataset {
 }
 
 @ArgsType()
-export class CreateDataset {
+export class CreateDatasetInput {
   @Field(() => String, { nullable: false })
   name: string;
   @Field(() => String, { nullable: false })
   code: string;
 }
 
+@ObjectType()
+export class CreateDatasetPayload {
+  @Field(() => Dataset)
+  dataset: Dataset;
+}
+
 @ArgsType()
-export class UpdateDataset {
+export class UpdateDatasetInput {
   @Field(() => String, { nullable: false })
   id: string;
 
@@ -27,4 +33,10 @@ export class UpdateDataset {
   name: string;
   @Field(() => String, { nullable: true })
   code: string;
+}
+
+@ObjectType()
+export class UpdateDatasetPayload {
+  @Field(() => Dataset)
+  dataset: Dataset;
 }

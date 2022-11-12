@@ -1,7 +1,13 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GetDatasetsUsecase } from 'src/domain/datasets/usecases/get.usecase';
 import { GetDatasetByIdUsecase } from 'src/domain/datasets/usecases/getById.usecase';
-import { CreateDataset, Dataset, UpdateDataset } from './datasets.schema';
+import {
+  CreateDatasetInput,
+  CreateDatasetPayload,
+  Dataset,
+  UpdateDatasetInput,
+  UpdateDatasetPayload,
+} from './datasets.schema';
 import { UUIDResolver } from 'graphql-scalars';
 import { CreateDatasetUsecase } from 'src/domain/datasets/usecases/create.usecase';
 import { UpdateDatasetUsecase } from 'src/domain/datasets/usecases/update.usecase';
@@ -25,13 +31,17 @@ export class DatasetResolver {
     return await this.getDatasetByIdUsecase.call(id);
   }
 
-  @Mutation(() => Dataset)
-  async createDataset(@Args({ type: () => CreateDataset }) args: CreateDataset): Promise<Dataset> {
-    return await this.createDatasetUsecase.call(args.name, args.code);
+  @Mutation(() => CreateDatasetPayload)
+  async createDataset(
+    @Args({ type: () => CreateDatasetInput }) args: CreateDatasetInput,
+  ): Promise<CreateDatasetPayload> {
+    return { dataset: await this.createDatasetUsecase.call(args.name, args.code) };
   }
 
-  @Mutation(() => Dataset)
-  async updateDataset(@Args({ type: () => UpdateDataset }) args: UpdateDataset): Promise<Dataset> {
-    return await this.updateDatasetUsecase.call(args);
+  @Mutation(() => UpdateDatasetPayload)
+  async updateDataset(
+    @Args({ type: () => UpdateDatasetInput }) args: UpdateDatasetInput,
+  ): Promise<UpdateDatasetPayload> {
+    return { dataset: await this.updateDatasetUsecase.call(args) };
   }
 }
