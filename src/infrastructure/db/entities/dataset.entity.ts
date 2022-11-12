@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { DataitemEntity } from './dataitem.entity';
 
 @Entity('dataset')
 export class DatasetEntity {
@@ -10,4 +11,7 @@ export class DatasetEntity {
 
   @Column()
   name: string;
+
+  @OneToMany(() => DataitemEntity, (dataitem) => dataitem.dataset)
+  dataitems: DataitemEntity[];
 }
