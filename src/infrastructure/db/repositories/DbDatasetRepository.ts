@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { DatasetRepository } from 'src/domain/interfaces/datasetRepository.interface';
+import { DatasetRepository } from 'src/domain/interfaces/datasetRepository';
 import { Dataset, UpdateDataset } from 'src/domain/types/dataset.types';
 import { DatasetEntity } from '../entities/dataset.entity';
 import { InjectRepository } from '@nestjs/typeorm';

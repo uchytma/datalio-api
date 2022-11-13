@@ -1,4 +1,5 @@
 import { ArgsType, Field, ObjectType } from '@nestjs/graphql';
+import { Dataitem } from '../dataitems/dataitems.schema';
 
 @ObjectType()
 export class Dataset {
@@ -8,6 +9,8 @@ export class Dataset {
   name: string;
   @Field(() => String, { nullable: false })
   code: string;
+  @Field(() => [Dataitem])
+  dataitems?: Dataitem[];
 }
 
 @ArgsType()

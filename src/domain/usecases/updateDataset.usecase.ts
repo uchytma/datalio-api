@@ -1,4 +1,4 @@
-import { DatasetRepository } from '../interfaces/datasetRepository.interface';
+import { DatasetRepository } from '../interfaces/datasetRepository';
 import type { Dataset, UpdateDataset } from '../types/dataset.types';
 
 export class UpdateDatasetUsecase {
