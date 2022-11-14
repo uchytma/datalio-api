@@ -5,7 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { DatasetNotFoundException } from 'src/domain/exceptions/datasetNotFoundException';
 import { DataitemRepository } from 'src/domain/interfaces/dataitemRepository';
 import { DataitemEntity } from '../entities/dataitem.entity';
-import { Dataitem } from 'src/domain/types/dataitem.types';
+import { CreateDataitem, Dataitem } from 'src/domain/types/dataitem.types';
 
 @Injectable()
 export class DbDataitemRepository implements DataitemRepository {
@@ -15,6 +15,19 @@ export class DbDataitemRepository implements DataitemRepository {
     @InjectRepository(DatasetEntity)
     private readonly repoDataset: Repository<DatasetEntity>,
   ) {}
+
+  /**
+   * @throws DatasetNotFoundException
+   */
+  async create(model: CreateDataitem): Promise<Dataitem> {
+    const dataSet = await this.repoDataset.findOne({ where: { id: model.datasetId } });
+    if (dataSet == null) throw new DatasetNotFoundException();
+    const dbEntity = this.repo.create(model);
+    dbEntity.dataset = dataSet;
+    const savedEntity = await this.repo.save(dbEntity);
+    return { ...savedEntity, datasetId: dataSet.id };
+  }
+
   async getByDatasetIds(datasetIds: string[]): Promise<Map<string, Dataitem[]>> {
     const items = await this.repoDataset.find({ where: { id: In(datasetIds) }, relations: ['dataitems'] });
     return new Map(items.map((item) => [item.id, this.mapToDomain(item)]));

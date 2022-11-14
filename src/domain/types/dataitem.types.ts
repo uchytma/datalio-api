@@ -4,3 +4,5 @@ export type Dataitem = {
   text: string;
   datasetId: string;
 };
+
+export type CreateDataitem = Omit<Dataitem, 'id'>;

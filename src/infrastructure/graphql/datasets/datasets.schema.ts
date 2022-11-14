@@ -1,23 +1,28 @@
-import { ArgsType, Field, InputType, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, ObjectType } from '@nestjs/graphql';
+import { UUIDResolver } from 'graphql-scalars';
 import { Dataitem } from '../dataitems/dataitems.schema';
 
 @ObjectType()
 export class Dataset {
-  @Field(() => String, { nullable: false })
+  @Field(() => UUIDResolver)
   id: string;
-  @Field(() => String, { nullable: false })
+
+  @Field(() => String)
   name: string;
-  @Field(() => String, { nullable: false })
+
+  @Field(() => String)
   code: string;
+
   @Field(() => [Dataitem])
   dataitems?: Dataitem[];
 }
 
 @InputType()
 export class CreateDatasetInput {
-  @Field(() => String, { nullable: false })
+  @Field(() => String)
   name: string;
-  @Field(() => String, { nullable: false })
+
+  @Field(() => String)
   code: string;
 }
 
@@ -29,12 +34,13 @@ export class CreateDatasetPayload {
 
 @InputType()
 export class UpdateDatasetInput {
-  @Field(() => String, { nullable: false })
+  @Field(() => UUIDResolver)
   id: string;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String)
   name: string;
-  @Field(() => String, { nullable: true })
+
+  @Field(() => String)
   code: string;
 }
 

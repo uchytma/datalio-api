@@ -12,6 +12,6 @@ export class DataitemEntity {
   @Column()
   text: string;
 
-  @ManyToOne(() => DatasetEntity, (dataset) => dataset.dataitems)
+  @ManyToOne(() => DatasetEntity, (dataset) => dataset.dataitems, { nullable: false })
   dataset: DatasetEntity;
 }
