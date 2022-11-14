@@ -17,7 +17,7 @@ export class DbDataitemRepository implements DataitemRepository {
   ) {}
   async getByDatasetIds(datasetIds: string[]): Promise<Map<string, Dataitem[]>> {
     const items = await this.repoDataset.find({ where: { id: In(datasetIds) }, relations: ['dataitems'] });
-    return new Map(items.map((item) => [item.id, item.dataitems]));
+    return new Map(items.map((item) => [item.id, this.mapToDomain(item)]));
   }
 
   /**
@@ -26,6 +26,13 @@ export class DbDataitemRepository implements DataitemRepository {
   async getByDatasetId(datasetId: string): Promise<Dataitem[]> {
     const dataSet = await this.repoDataset.findOne({ where: { id: datasetId }, relations: ['dataitems'] });
     if (dataSet == null) throw new DatasetNotFoundException();
-    return dataSet.dataitems;
+    return this.mapToDomain(dataSet);
+  }
+
+  private mapToDomain(dataset: DatasetEntity): Dataitem[] {
+    return dataset.dataitems.map((item) => ({
+      ...item,
+      datasetId: dataset.id,
+    }));
   }
 }
