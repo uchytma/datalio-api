@@ -12,7 +12,7 @@ import { UUIDResolver } from 'graphql-scalars';
 import { CreateDatasetUsecase } from 'src/domain/usecases/createDataset.usecase';
 import { UpdateDatasetUsecase } from 'src/domain/usecases/updateDataset.usecase';
 import { Dataitem } from '../dataitems/dataitems.schema';
-import { PrefetchCache } from 'src/utils/typeOrm/prefetchCache';
+import { PrefetchCache } from 'src/utils/prefetchCache/prefetchCache';
 import { GraphQLResolveInfo } from 'graphql';
 import { parseResolveInfo, ResolveTree, simplifyParsedResolveInfoFragmentWithType } from 'graphql-parse-resolve-info';
 

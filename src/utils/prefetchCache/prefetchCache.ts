@@ -37,7 +37,7 @@ export class PrefetchCache<TKey, TValue> {
   /**
    * Try to get the item from the cache.
    * If not found, adds key to registered keys for batch and fetches all registered keys in a batch.
-   * Festch is done in a lock to prevent multiple fetches.
+   * Fetch is done in a lock to prevent multiple fetches.
    *
    * @throws PrefetchCacheNotFoundException if key was not found in the cache.
    */
@@ -62,8 +62,9 @@ export class PrefetchCache<TKey, TValue> {
   }
 
   private async batchFetchData() {
-    const res = await this.fetchFunc(this.registeredKeys);
-    this.registeredKeys.clear();
+    const keysToFetch = this.registeredKeys;
+    this.registeredKeys = new Set();
+    const res = await this.fetchFunc(keysToFetch);
     this.cache = new Map([...this.cache, ...res]);
   }
 }

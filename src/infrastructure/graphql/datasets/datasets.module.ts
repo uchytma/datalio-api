@@ -8,7 +8,7 @@ import { DbModule } from 'src/infrastructure/db/db.module';
 import { DatasetResolver } from './datasets.resolver';
 import { GetDatasetsItemsUsecase } from 'src/domain/usecases/getDatasetsItems.usecase';
 import { DataitemRepository } from 'src/domain/interfaces/dataitemRepository';
-import { PrefetchCache } from 'src/utils/typeOrm/prefetchCache';
+import { PrefetchCache } from 'src/utils/prefetchCache/prefetchCache';
 import { Dataitem } from '../dataitems/dataitems.schema';
 
 @Module({})
