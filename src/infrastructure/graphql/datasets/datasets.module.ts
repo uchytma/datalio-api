@@ -1,4 +1,4 @@
-import { DynamicModule, Module } from '@nestjs/common';
+import { DynamicModule, Module, Scope } from '@nestjs/common';
 import { DatasetRepository } from 'src/domain/interfaces/datasetRepository';
 import { CreateDatasetUsecase } from 'src/domain/usecases/createDataset.usecase';
 import { GetDatasetsUsecase } from 'src/domain/usecases/getDatasets.usecase';
@@ -6,8 +6,10 @@ import { GetDatasetByIdUsecase } from 'src/domain/usecases/getDatasetById.usecas
 import { UpdateDatasetUsecase } from 'src/domain/usecases/updateDataset.usecase';
 import { DbModule } from 'src/infrastructure/db/db.module';
 import { DatasetResolver } from './datasets.resolver';
-import { GetDatasetItemsUsecase } from 'src/domain/usecases/getDatasetItemsUsecase.usecase';
+import { GetDatasetsItemsUsecase } from 'src/domain/usecases/getDatasetsItems.usecase';
 import { DataitemRepository } from 'src/domain/interfaces/dataitemRepository';
+import { PrefetchCache } from 'src/utils/typeOrm/prefetchCache';
+import { Dataitem } from '../dataitems/dataitems.schema';
 
 @Module({})
 export class DatasetsModule {
@@ -38,9 +40,16 @@ export class DatasetsModule {
           inject: [DbModule.DATASET_REPOSITORY],
         },
         {
-          provide: GetDatasetItemsUsecase,
-          useFactory: (repo: DataitemRepository) => new GetDatasetItemsUsecase(repo),
+          provide: GetDatasetsItemsUsecase,
+          useFactory: (repo: DataitemRepository) => new GetDatasetsItemsUsecase(repo),
           inject: [DbModule.DATAITEM_REPOSITORY],
+        },
+        {
+          provide: PrefetchCache<string, Dataitem[]>,
+          useFactory: (usecase: GetDatasetsItemsUsecase) =>
+            new PrefetchCache<string, Dataitem[]>((keys) => usecase.call(keys)),
+          scope: Scope.REQUEST,
+          inject: [GetDatasetsItemsUsecase],
         },
       ],
       exports: [],

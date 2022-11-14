@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { DatasetEntity } from '../entities/dataset.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
@@ -15,6 +15,10 @@ export class DbDataitemRepository implements DataitemRepository {
     @InjectRepository(DatasetEntity)
     private readonly repoDataset: Repository<DatasetEntity>,
   ) {}
+  async getByDatasetIds(datasetIds: string[]): Promise<Map<string, Dataitem[]>> {
+    const items = await this.repoDataset.find({ where: { id: In(datasetIds) }, relations: ['dataitems'] });
+    return new Map(items.map((item) => [item.id, item.dataitems]));
+  }
 
   /**
    * @throws DatasetNotFoundException
