@@ -51,15 +51,15 @@ export class DatasetResolver {
 
   @Mutation(() => CreateDatasetPayload)
   async createDataset(
-    @Args({ type: () => CreateDatasetInput }) args: CreateDatasetInput,
+    @Args({ name: 'input', type: () => CreateDatasetInput }) input: CreateDatasetInput,
   ): Promise<CreateDatasetPayload> {
-    return { dataset: await this.createDatasetUsecase.call(args.name, args.code) };
+    return { dataset: await this.createDatasetUsecase.call(input.name, input.code) };
   }
 
   @Mutation(() => UpdateDatasetPayload)
   async updateDataset(
-    @Args({ type: () => UpdateDatasetInput }) args: UpdateDatasetInput,
+    @Args({ name: 'input', type: () => UpdateDatasetInput }) input: UpdateDatasetInput,
   ): Promise<UpdateDatasetPayload> {
-    return { dataset: await this.updateDatasetUsecase.call(args) };
+    return { dataset: await this.updateDatasetUsecase.call(input) };
   }
 }
