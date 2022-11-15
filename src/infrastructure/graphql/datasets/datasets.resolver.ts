@@ -15,6 +15,7 @@ import { Dataitem } from '../dataitems/dataitems.schema';
 import { PrefetchCache } from 'src/utils/prefetchCache/prefetchCache';
 import { GraphQLResolveInfo } from 'graphql';
 import { parseResolveInfo, ResolveTree, simplifyParsedResolveInfoFragmentWithType } from 'graphql-parse-resolve-info';
+import { ConfigService } from '@nestjs/config';
 
 @Resolver(() => Dataset)
 export class DatasetResolver {

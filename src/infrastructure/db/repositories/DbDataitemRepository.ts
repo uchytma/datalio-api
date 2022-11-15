@@ -15,6 +15,10 @@ export class DbDataitemRepository implements DataitemRepository {
     @InjectRepository(DatasetEntity)
     private readonly repoDataset: Repository<DatasetEntity>,
   ) {}
+  async getByIds(ids: string[]): Promise<Dataitem[]> {
+    const items = await this.repo.find({ where: { id: In(ids) }, relations: ['dataset'] });
+    return items.map((item) => ({ ...item, datasetId: item.dataset.id }));
+  }
 
   /**
    * @throws DatasetNotFoundException

@@ -24,6 +24,6 @@ const dbModule = TypeOrmModule.forRoot(getDataSourceOptions());
   exports: [DbModule.DATASET_REPOSITORY, DbModule.DATAITEM_REPOSITORY],
 })
 export class DbModule {
-  static readonly DATASET_REPOSITORY = 'DatasetRepositoryReadonly';
-  static readonly DATAITEM_REPOSITORY = 'DataitemRepositoryReadonly';
+  static readonly DATASET_REPOSITORY = 'DatasetRepository';
+  static readonly DATAITEM_REPOSITORY = 'DataitemRepository';
 }

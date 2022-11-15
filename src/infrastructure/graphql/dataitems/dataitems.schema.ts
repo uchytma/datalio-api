@@ -1,4 +1,4 @@
-import { Field, InputType, ObjectType } from '@nestjs/graphql';
+import { ArgsType, Field, InputType, ObjectType } from '@nestjs/graphql';
 import { UUIDResolver } from 'graphql-scalars';
 import { Dataset } from '../datasets/datasets.schema';
 
@@ -36,4 +36,18 @@ export class CreateDataitemInput {
 export class CreateDataitemPayload {
   @Field(() => Dataitem)
   dataitem: Dataitem;
+}
+
+@ArgsType()
+export class FindDataitemsInput {
+  @Field(() => String)
+  text: string;
+}
+
+@ObjectType()
+export class DataitemFindResult {
+  @Field(() => Dataitem)
+  dataitem: Dataitem;
+  @Field(() => Number)
+  score: number;
 }
